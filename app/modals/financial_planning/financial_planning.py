@@ -6,6 +6,7 @@ class FinancialPlanning(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     full_name = db.Column(db.String, nullable=False)
     email = db.Column(db.String, nullable=False)
+    phone = db.Column(db.Interger(15), nullable=False)
     employment = db.Column(db.String, nullable=False)
     meeting = db.Column(db.String, nullable=False)
     app_date = db.Column(db.Date, nullable=False)  

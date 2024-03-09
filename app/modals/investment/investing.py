@@ -1,11 +1,12 @@
 from app import db
 
-class Investment(db.Models):
+class Investment(db.Model):
     __tablename__ = "investment"
 
     id = db.Column(db.Integer, primary_key=True) 
     full_name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(50), nullable=False)
+    phone = db.Column(db.Interger(15), nullable=False)
     no_children = db.Column(db.Interger(15), nullable=False)
     Solution = db.Column(db.String(50), nullable=False)
     meeting = db.Column(db.String(50), nullable=False)
