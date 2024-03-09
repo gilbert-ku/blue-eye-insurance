@@ -7,6 +7,7 @@ class FinancialPlanning(db.Model):
     full_name = db.Column(db.String, nullable=False)
     email = db.Column(db.String, nullable=False)
     employment = db.Column(db.String, nullable=False)
+    meeting = db.Column(db.String, nullable=False)
     app_date = db.Column(db.Date, nullable=False)  
     app_time = db.Column(db.Time, nullable=False)  
     comment = db.Column(db.String, nullable=False)  
