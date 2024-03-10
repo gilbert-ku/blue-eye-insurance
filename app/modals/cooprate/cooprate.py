@@ -7,7 +7,7 @@ class Cooprate(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     full_name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False)
-    phone = db.Column(db.integer(15), nullable=False)
+    phone = db.Column(db.Integer(15), nullable=False)
     cover_type = db.Column(db.String(100), nullable=False)
     meeting = db.Column(db.String(100), nullable=False )
     app_date = db.Column(db.Date, nullable=False)
