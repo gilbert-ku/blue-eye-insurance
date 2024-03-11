@@ -125,15 +125,20 @@ class FinancialPlanningAppointment(Resource):
 
 
     def delete(self, id):
-        appointment = FinancialPlanning.query.filter_by(id=id).first()
+        try:
+            appointment = FinancialPlanning.query.filter_by(id=id).first()
 
-        db.session.delete(appointment)
-        db.session.commit()
+            if not appointment:
+                return make_response("Appointment not found", 404)
 
-        return make_response("deleted successfully", 204)
+            db.session.delete(appointment)
+            db.session.commit()
 
-    
-# api.add_resource(FinancialPlanning, "/financial_planning")
+            return make_response("Deleted successfully", 204)
+        except Exception as e:
+            db.session.rollback()
+            return make_response(f"An error occurred: {str(e)}", 500)
+
     
 api.add_resource(FinancialPlanningAppointment, "/financial_planning/financial_planning", "/financial_planning/financial_planning/<int:id>")
 
