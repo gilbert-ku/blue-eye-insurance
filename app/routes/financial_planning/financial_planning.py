@@ -123,21 +123,31 @@ class FinancialPlanningAppointment(Resource):
         # Return response with parsed arguments and message
         return make_response(jsonify(response_data), status_code)
 
-
-    def delete(self, id):
+    def delete(self, id=None):
         try:
-            appointment = FinancialPlanning.query.filter_by(id=id).first()
+            if id is not None:
+                appointment = FinancialPlanning.query.filter_by(id=id).first()
 
-            if not appointment:
-                return make_response("Appointment not found", 404)
+                if not appointment:
+                    return make_response("Appointment not found", 404)
 
-            db.session.delete(appointment)
+                db.session.delete(appointment)
+            else:
+                appointments = FinancialPlanning.query.all()
+
+                if not appointments:
+                    return make_response("No appointments found", 404)
+
+                for appointment in appointments:
+                    db.session.delete(appointment)
+
             db.session.commit()
 
             return make_response("Deleted successfully", 204)
         except Exception as e:
             db.session.rollback()
             return make_response(f"An error occurred: {str(e)}", 500)
+
 
     
 api.add_resource(FinancialPlanningAppointment, "/financial_planning", "/financial_planning/<int:id>")
