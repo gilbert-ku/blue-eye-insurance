@@ -14,3 +14,24 @@ class FinancialPlanning(db.Model):
     app_time = db.Column(db.String, nullable=False)  
     comment = db.Column(db.String(300), nullable=False)  
     created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow, nullable=False )  
+
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'full_name': self.full_name,
+            'email': self.email,
+            'phone': self.phone,
+            'employment': self.employment,
+            'meeting': self.meeting,
+            'app_date': self.app_date.strftime("%m/%d/%Y"),  # Convert date object to string in desired format
+            'app_time': self.app_time,
+            'comment': self.comment,
+            'created_at': self.created_at.strftime("%m/%d/%Y %H:%M:%S")  # Convert datetime object to string in desired format
+        }
+
+
+# vars() is used to retrive __dict__ attribute of the object
+
+    # def to_dict(self):
+    #     return vars(self)

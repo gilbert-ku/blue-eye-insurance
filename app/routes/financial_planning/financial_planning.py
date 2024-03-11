@@ -12,7 +12,7 @@ api = Api(finacial_blueprint)
 
 class Welcome(Resource):
     def get(self):
-        return{"BEIA": "your one stop insurance provider"}
+        return{"Financial Planning": "welcome to financial planning route"}
     
 api.add_resource(Welcome, "/")
 
@@ -30,8 +30,24 @@ parser.add_argument("comment", type=str, help="client's comment and question")
 
 
 class Finacialplanning(Resource):
-    def get(self):
-        return{"message": "welcome to blue insurance financial planning"}
+    def get(self ):
+
+        # get all users
+        financial_planning = FinancialPlanning.query.all()  
+        response_dict_list = []
+        for appointment in financial_planning:
+            response_dict = appointment.to_dict()
+            response_dict_list.append(response_dict)
+        resp = make_response(
+            jsonify(response_dict_list),
+            200
+        )
+
+        return resp
+    
+        
+
+        
     
     def post(self):
     # Parse the request arguments
@@ -94,4 +110,4 @@ class Finacialplanning(Resource):
         pass
 
     
-api.add_resource(Finacialplanning, "/financial_planning")
+api.add_resource(Finacialplanning, "/financial_planning/<int:id>")
