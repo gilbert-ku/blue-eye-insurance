@@ -1,7 +1,8 @@
 from flask import Blueprint, jsonify, make_response
 from flask_restful import Resource, Api,reqparse
-import phonenumbers
-from app.models.financial_planning.financial_planning import FinancialPlanning
+from datetime import datetime, date
+from app import db
+from app.models.financial_planning.financial_planning import FinancialPlanning 
 
 
 
@@ -15,22 +16,11 @@ class Welcome(Resource):
     
 api.add_resource(Welcome, "/")
 
-# def validate_phone(value):
-#     try:
-#         parsed_number = phonenumbers.parse(value, None)  # 'None' means the number is not associated with any particular region
-#         if not phonenumbers.is_valid_number(parsed_number):
-#             raise ValueError()
-#     except:
-#         raise ValueError("Invalid phone number")
-
-
-
 
 # Request parser for handling POST and PUT requests
 parser = reqparse.RequestParser()
 parser.add_argument("full_name", type=str, help="client's Name")
 parser.add_argument("email", type=str, help="client's email")
-# parser.add_argument('phone', type=validate_phone, help="Client's phone number")
 parser.add_argument('phone', type=str, help="Client's phone number")
 parser.add_argument("employment", type=str, help="Client's empolyment status")
 parser.add_argument("meeting", type=str, help="type of meeting")
@@ -44,7 +34,7 @@ class Finacialplanning(Resource):
         return{"message": "welcome to blue insurance financial planning"}
     
     def post(self):
-        # Parse the request arguments
+    # Parse the request arguments
         args = parser.parse_args()
 
         # Access parsed arguments and perform further processing
@@ -53,26 +43,52 @@ class Finacialplanning(Resource):
         phone = args["phone"]
         employment = args["employment"]
         meeting = args["meeting"]
-        app_date = args["app_date"]
+        app_date = datetime.strptime(args["app_date"], "%m/%d/%Y").date()
         app_time = args["app_time"]
         comment = args["comment"]
 
-        # Perform additional processing, validation, or database operations
-        
+        # Create an instance of the FinancialPlanning model
+        financialplanning = FinancialPlanning(
+            full_name=full_name,
+            email=email,
+            phone=phone,
+            employment=employment,
+            meeting=meeting,
+            app_date=app_date,
+            app_time=app_time,
+            comment=comment
+        )
+
+        # Add the instance to the session
+        db.session.add(financialplanning)
+
+        try:
+            # Commit the changes to the database
+            db.session.commit()
+            message = "FinancialPlanning created successfully."
+            status_code = 201
+        except Exception as e:
+            # Rollback the session in case of an error
+            db.session.rollback()
+            message = "Error creating appointment: " + str(e)
+            status_code = 500
+
         # Construct response JSON object
         response_data = {
+            "message": message,
             "full_name": full_name,
             "email": email,
             "phone": phone,
             "employment": employment,
             "meeting": meeting,
-            "app_date": app_date,
+            "app_date": str(app_date),  # Convert app_date back to string for response
             "app_time": app_time,
             "comment": comment
         }
 
-        # Return response with parsed arguments
-        return make_response(jsonify(response_data), 201)
+        # Return response with parsed arguments and message
+        return make_response(jsonify(response_data), status_code)
+
 
     def delete(self, Finacialplanning_id):
         pass
