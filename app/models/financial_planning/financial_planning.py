@@ -24,10 +24,12 @@ class FinancialPlanning(db.Model):
             'phone': self.phone,
             'employment': self.employment,
             'meeting': self.meeting,
-            'app_date': self.app_date.strftime("%m/%d/%Y"),  # Convert date object to string in desired format
+            # Convert date object to string in desired format
+            'app_date': self.app_date.strftime("%m/%d/%Y"),  
             'app_time': self.app_time,
             'comment': self.comment,
-            'created_at': self.created_at.strftime("%m/%d/%Y %H:%M:%S")  # Convert datetime object to string in desired format
+            # Convert datetime object to string in desired format
+            'created_at': self.created_at.strftime("%m/%d/%Y %H:%M:%S")  
         }
 
 
