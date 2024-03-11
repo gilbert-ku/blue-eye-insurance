@@ -29,26 +29,44 @@ parser.add_argument("app_time", type=str, help="Client's appointment time")
 parser.add_argument("comment", type=str, help="client's comment and question")
 
 
-class Finacialplanning(Resource):
-    def get(self ):
+class FinancialPlanningAppointment(Resource):
+    # def get(self, id=None):
+    #     if id is None:
+    #         # Get all financial planning appointments
+    #         financial_planning = FinancialPlanning.query.all()
+    #         response_dict_list = [appointment.to_dict() for appointment in financial_planning]
+    #         return jsonify(response_dict_list), 200
+    #     else:
+    #         # Get financial planning appointment by id
+    #         financial_planning = FinancialPlanning.query.filter_by(id=id).first()
 
-        # get all users
-        financial_planning = FinancialPlanning.query.all()  
-        response_dict_list = []
+    #         if financial_planning:
+    #             response = make_response(jsonify(financial_planning.to_dict()), 200)
+    #             return response
+    #         else:
+    #             response = make_response(jsonify({"error": "Financial planning appointment not found"}), 404)
+    #             return response
+    
+    def get(self):
+        # Get all financial planning appointments
+
+        financial_planning = FinancialPlanning.query.all()
+        appointment_list = []
         for appointment in financial_planning:
-            response_dict = appointment.to_dict()
-            response_dict_list.append(response_dict)
-        resp = make_response(
-            jsonify(response_dict_list),
-            200
-        )
+            appointment_data = {
+                "full_name": appointment.full_name,
+                "email": appointment.email,
+                "phone": appointment.phone,
+                "employment": appointment.employment,
+                "meeting": appointment.meeting,
+                "app_date": appointment.app_date.strftime('%Y-%m-%d'),  # Convert app_date to string for response
+                "app_time": appointment.app_time,
+                "comment": appointment.comment
+            }
+            appointment_list.append(appointment_data)
 
-        return resp
-    
-        
+        return {"Financial Planning Appointments": appointment_list}, 200
 
-        
-    
     def post(self):
     # Parse the request arguments
         args = parser.parse_args()
@@ -110,4 +128,7 @@ class Finacialplanning(Resource):
         pass
 
     
-api.add_resource(Finacialplanning, "/financial_planning/<int:id>")
+# api.add_resource(FinancialPlanning, "/financial_planning")
+    
+api.add_resource(FinancialPlanningAppointment, "/financial_planning/financial_planning", "/financial_planning/financial_planning/<int:id>")
+
