@@ -28,7 +28,28 @@ parser.add_argument("comment", type=str, help="Client's commwnt")
 
 class InvestmentAppointment(Resource):
     def get(self):
-        pass
+        
+        # get all
+
+        investment_appointment = Investment.query.all()
+
+        appoinment_list = []
+        for appointment in investment_appointment:
+            appoinment_data = {
+                "full_name" : appointment.full_name,
+                "email" : appointment.email,
+                "phone" : appointment.phone,
+                "no_children" : appointment.no_children,
+                "solution" : appointment.solution,
+                "meeting" : appointment.meeting,
+                # Convert app_date to string for response
+                "app_date" : appointment.app_date.strftime("%d-%m-%Y"),
+                "app_time" : appointment.app_time,
+                "comment" : appointment.comment,
+            }
+            appoinment_list.append(appoinment_data)
+
+        return {"Investment Appointments" : appoinment_list}, 200
 
     def post(self):
         # Parse the request arguments
