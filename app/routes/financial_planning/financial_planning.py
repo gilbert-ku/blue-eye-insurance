@@ -6,7 +6,7 @@ from app.models.financial_planning.financial_planning import FinancialPlanning
 
 
 
-finacial_blueprint = Blueprint("financial_planning", __name__)
+finacial_blueprint = Blueprint("financial_planning", __name__, url_prefix='/financial_planning')
 
 api = Api(finacial_blueprint)
 
@@ -140,6 +140,4 @@ class FinancialPlanningAppointment(Resource):
             return make_response(f"An error occurred: {str(e)}", 500)
 
     
-api.add_resource(FinancialPlanningAppointment, "/financial_planning/financial_planning", "/financial_planning/financial_planning/<int:id>")
-
-
+api.add_resource(FinancialPlanningAppointment, "/financial_planning", "/financial_planning/<int:id>")
