@@ -124,11 +124,17 @@ class FinancialPlanningAppointment(Resource):
         return make_response(jsonify(response_data), status_code)
 
 
-    def delete(self, Finacialplanning_id):
-        pass
+    def delete(self, id):
+        appointment = FinancialPlanning.query.filter_by(id=id).first()
+
+        db.session.delete(appointment)
+        db.session.commit()
+
+        return make_response("deleted successfully", 204)
 
     
 # api.add_resource(FinancialPlanning, "/financial_planning")
     
 api.add_resource(FinancialPlanningAppointment, "/financial_planning/financial_planning", "/financial_planning/financial_planning/<int:id>")
+
 
