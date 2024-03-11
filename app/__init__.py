@@ -9,5 +9,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 from app.routes.financial_planning.financial_planning import finacial_blueprint
+from app.routes.investment.investment_routing import investment_blueprint
 # register blueprint
 app.register_blueprint(finacial_blueprint)
+app.register_blueprint(investment_blueprint)
