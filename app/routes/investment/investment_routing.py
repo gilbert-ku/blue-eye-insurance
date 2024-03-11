@@ -112,7 +112,21 @@ class InvestmentAppointment(Resource):
         return make_response(jsonify(response_data), status_code)
 
 
-    def delete(self):
-        pass
+    def delete(self, id):
+        try:
+            invest_appointment = Investment.query.filter_by(id=id).first()
 
-api.add_resource(InvestmentAppointment, "/investments")
+            if not invest_appointment:
+                return make_response("Appointment not found")
+            db.session.delete(invest_appointment)
+            db.session.commit()
+
+            return make_response("Deleted Successfully", 204)
+        except Exception as e:
+            # rollback an error message
+            db.session.rollback()
+
+            return make_response(f"An error occurred: {str(e)}", 500)
+
+
+api.add_resource(InvestmentAppointment, "/investments", "/investment/<int:id>")
