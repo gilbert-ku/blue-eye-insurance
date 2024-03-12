@@ -35,9 +35,73 @@ class MotorAppointment(Resource):
         pass
     
     def post(self):
-        
-        pass
+        args = parser.parse_args()
 
+        # access parsed arg
+        full_name = args["full_name"]
+        email = args["email"]
+        phone = args["phone"]
+        category = args["category"]
+        cover_type = args["cover_type"]
+        year_manufc = args["year_manufc"]
+        valuation = args["valuation"]
+        meeting = args["meeting"]
+        app_date = datetime.strptime(args["app_date"], "%m/%d/%Y").date()
+        app_time = args["app_time"]
+        comment = args["comment"]
+
+
+        # create an instacne
+
+        motor_appointment = Motor (
+
+            full_name=full_name,
+            email=email,
+            phone=phone,
+            category=category,
+            cover_type=cover_type,
+            year_manufc=year_manufc,
+            valuation=valuation,
+            meeting=meeting,
+            app_date=app_date,
+            app_time=app_time,
+            comment=comment
+        )
+
+        db.session.add(motor_appointment)
+
+        try:
+            db.session.commit()
+            message = "Motor appointment created successfully."
+            status_code = 201
+
+        except Exception as e:
+            db.session.rollback()
+            message = "Error creating motor appointment: " + str(e)
+            status_code = 500
+
+
+        # constructor
+            
+            response_data ={
+                "message": message,
+                "full_name": full_name,
+                "email": email,
+                "phone": phone,
+                "category": category,
+                "cover_type": cover_type,
+                "year_manufc": year_manufc,
+                "valuation": valuation,
+                "meeting":meeting,
+                "app_date": str(app_date),
+                "app_time": app_time,
+                "comment": comment
+            }
+
+            # return responce
+
+            return make_response(jsonify(response_data), status_code)
+        
     def delete(self):
         pass
 
