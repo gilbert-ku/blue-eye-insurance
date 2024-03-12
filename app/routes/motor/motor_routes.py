@@ -31,29 +31,53 @@ parser.add_argument("app_time", type=str, help="Client's app time prefrance")
 parser.add_argument("comment", type=str, help="Client's app comments")
 
 class MotorAppointment(Resource):
-    def get(self):
-        
-        motor_appointment = Motor.query.all()
+    def get(self, id=None):
+        if id:
+            # Retrieve a single appointment by ID
+            motor_appointment = Motor.query.filter_by(id=id).first()
 
-        motorAppointment_list = []
+            if not motor_appointment:
+                return {"error": "Appointment not found"}, 404
 
-        for appointment in motor_appointment:
             appointment_data = {
-                "full_name": appointment.full_name,
-                "email": appointment.email,
-                "phone": appointment.phone,
-                "category": appointment.category,
-                "cover_type": appointment.cover_type,
-                "year_manufc": appointment.year_manufc,
-                "valuation": appointment.valuation,
-                "meeting":appointment.meeting,
-                "app_date": appointment.app_date.strftime("%Y-%m-%d"),
-                "app_time": appointment.app_time,
-                "comment": appointment.comment
+                "full_name": motor_appointment.full_name,
+                "email": motor_appointment.email,
+                "phone": motor_appointment.phone,
+                "category": motor_appointment.category,
+                "cover_type": motor_appointment.cover_type,
+                "year_manufc": motor_appointment.year_manufc,
+                "valuation": motor_appointment.valuation,
+                "meeting": motor_appointment.meeting,
+                "app_date": motor_appointment.app_date.strftime("%Y-%m-%d"),
+                "app_time": motor_appointment.app_time,
+                "comment": motor_appointment.comment
             }
-            motorAppointment_list.append(appointment_data)
 
-            return {"motor Appointment" : motorAppointment_list}, 200
+            return {"motor Appointment": appointment_data}, 200
+        else:
+            # Retrieve all appointments
+            motor_appointments = Motor.query.all()
+
+            motorAppointment_list = []
+
+            for appointment in motor_appointments:
+                appointment_data = {
+                    "full_name": appointment.full_name,
+                    "email": appointment.email,
+                    "phone": appointment.phone,
+                    "category": appointment.category,
+                    "cover_type": appointment.cover_type,
+                    "year_manufc": appointment.year_manufc,
+                    "valuation": appointment.valuation,
+                    "meeting": appointment.meeting,
+                    "app_date": appointment.app_date.strftime("%Y-%m-%d"),
+                    "app_time": appointment.app_time,
+                    "comment": appointment.comment
+                }
+                motorAppointment_list.append(appointment_data)
+
+            return {"motor Appointments": motorAppointment_list}, 200
+
 
     
     def post(self):
