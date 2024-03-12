@@ -30,22 +30,6 @@ parser.add_argument("comment", type=str, help="client's comment and question")
 
 
 class FinancialPlanningAppointment(Resource):
-    # def get(self, id=None):
-    #     if id is None:
-    #         # Get all financial planning appointments
-    #         financial_planning = FinancialPlanning.query.all()
-    #         response_dict_list = [appointment.to_dict() for appointment in financial_planning]
-    #         return jsonify(response_dict_list), 200
-    #     else:
-    #         # Get financial planning appointment by id
-    #         financial_planning = FinancialPlanning.query.filter_by(id=id).first()
-
-    #         if financial_planning:
-    #             response = make_response(jsonify(financial_planning.to_dict()), 200)
-    #             return response
-    #         else:
-    #             response = make_response(jsonify({"error": "Financial planning appointment not found"}), 404)
-    #             return response
     
     def get(self):
         # Get all financial planning appointments
