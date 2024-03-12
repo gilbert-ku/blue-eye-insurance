@@ -32,7 +32,29 @@ parser.add_argument("comment", type=str, help="Client's app comments")
 
 class MotorAppointment(Resource):
     def get(self):
-        pass
+        
+        motor_appointment = Motor.query.all()
+
+        motorAppointment_list = []
+
+        for appointment in motor_appointment:
+            appointment_data = {
+                "full_name": appointment.full_name,
+                "email": appointment.email,
+                "phone": appointment.phone,
+                "category": appointment.category,
+                "cover_type": appointment.cover_type,
+                "year_manufc": appointment.year_manufc,
+                "valuation": appointment.valuation,
+                "meeting":appointment.meeting,
+                "app_date": appointment.app_date.strftime("%Y-%m-%d"),
+                "app_time": appointment.app_time,
+                "comment": appointment.comment
+            }
+            motorAppointment_list.append(appointment_data)
+
+            return {"motor Appointment" : motorAppointment_list}, 200
+
     
     def post(self):
         args = parser.parse_args()
