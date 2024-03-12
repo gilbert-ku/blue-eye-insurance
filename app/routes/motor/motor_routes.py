@@ -102,8 +102,32 @@ class MotorAppointment(Resource):
 
             return make_response(jsonify(response_data), status_code)
         
-    def delete(self):
-        pass
+    def delete(self, id=None):
+        try:
+            if id is not None: 
+                appointment = Motor.query.filter_by(id=id).first()
+
+                if not appointment:
+                    return make_response("Appointment not found", 404)
+                
+                db.session.delete(appointment)
+
+            else:
+                appointments = Motor.query.all()
+
+                if not appointment:
+                    return make_response("No appointment found", 404)
+                
+                for appointment in appointments:
+                    db.session.delete(appointment)
+
+            db.session.commit()
+
+            return make_response("Deleted successfully", 204)
+        
+        except Exception as e:
+            db.session.rollback()
+            return make_response(f"An error occured: {str(e)}", 500)
 
 
 api.add_resource(MotorAppointment, "/motorAppointment", "/motorAppointment/<int:id>")
