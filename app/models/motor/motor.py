@@ -16,4 +16,23 @@ class Motor(db.Model):
     app_date = db.Column(db.Date, nullable=False)
     app_time = db.Column(db.String, nullable=False)
     comment = db.Column(db.String(300), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False )
+    created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow, nullable=False )
+
+
+    def to_dict(self):
+        return{
+            "id": self.id,
+            "full_name": self.full_name,
+            "email": self.email,
+            "phone": self.phone,
+            "category": self.category,
+            "cover_type": self.cover_type,
+            "year_manufc": self.year_manufc,
+            "valuation": self.valuation,
+            "meeting": self.meeting,
+            "app_date": self.app_date.strftime("%m%d%Y"),
+            "app_time": self.app_time,
+            "comment": self.comment,
+            "created_at": self.created_at.strftime("%m/%d/%Y %H:%M:%S")
+        }
+    
