@@ -1,7 +1,7 @@
 from app import db
 import datetime
 
-class Medical(db.Modal):
+class Medical(db.Model):
     __tablename__ = "medical"
     id = db.Column(db.Integer, primary_key=True)
     full_name = db.Column(db.String(100), nullable=False)
