@@ -15,4 +15,15 @@ class MedicalApi(Resource):
     
 api.add_resource(MedicalApi, "/")
 
-# re
+# request parser
+
+parser = reqparse.RequestParser()
+parser.add_argument("full_name", type=str, help="Client's name")
+parser.add_argument("emai", type=str, help="Client's email")
+parser.add_argument("phone", type=str, help="Client's phone")
+parser.add_argument("cover_type", type=str, help="Client's cover type")
+parser.add_argument("date_of_birth", type=str, help="Client's date of birth")
+parser.add_argument("meeting", type=str, help="Client's meeting prefrance")
+parser.add_argument("app_date", type=str, help="Client's appointment date")
+parser.add_argument("app_time", type=str, help="Client's appointment time")
+parser.add_argument("comment", type=str, help="Client's comment")

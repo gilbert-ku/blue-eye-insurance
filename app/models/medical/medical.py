@@ -23,11 +23,11 @@ class Medical(db.Model):
             "email": self.email,
             "phone": self.phone,
             "cover_type": self.cover_type,
-            "date_of_birth": self.date_of_birth,
+            "date_of_birth": self.date_of_birth.strftime("%m%d%Y"),
             "meeting": self.meeting,
-            "app_date": self.app_date,
+            "app_date": self.app_date.strftime("%m%d%Y"),
             "app_time": self.app_time,
             "comment": self.comment,
-            "created_at": self.created_at
+            "created_at": self.created_at.strftime("%m/%d/%Y %H:%M:%S")
         }
 
