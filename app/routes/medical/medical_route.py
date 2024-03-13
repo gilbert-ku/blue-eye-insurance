@@ -19,7 +19,7 @@ api.add_resource(MedicalApi, "/")
 
 parser = reqparse.RequestParser()
 parser.add_argument("full_name", type=str, help="Client's name")
-parser.add_argument("emai", type=str, help="Client's email")
+parser.add_argument("email", type=str, help="Client's email")
 parser.add_argument("phone", type=str, help="Client's phone")
 parser.add_argument("cover_type", type=str, help="Client's cover type")
 parser.add_argument("date_of_birth", type=str, help="Client's date of birth")
@@ -27,3 +27,74 @@ parser.add_argument("meeting", type=str, help="Client's meeting prefrance")
 parser.add_argument("app_date", type=str, help="Client's appointment date")
 parser.add_argument("app_time", type=str, help="Client's appointment time")
 parser.add_argument("comment", type=str, help="Client's comment")
+
+class MedicalAppointment(Resource):
+    def get(self):
+        pass
+
+    def post(self):
+        args = parser.parse_args()
+
+        full_name = args["full_name"]
+        email = args["email"]
+        phone = args["phone"]
+        cover_type = args["cover_type"]
+        date_of_birth = datetime.strptime(args["date_of_birth"], "%d/%m/%Y").date()
+        meeting = args["meeting"]
+        app_date = datetime.strptime(args["app_date"], "%d/%m/%Y").date()
+        app_time = args["app_time"]
+        comment = args["comment"]
+
+
+        # instance
+
+
+        medical_appointment = Medical (
+            full_name=full_name,
+            email=email,
+            phone=phone,
+            date_of_birth=date_of_birth,
+            cover_type=cover_type,
+            meeting=meeting,
+            app_date=app_date,
+            app_time=app_time,
+            comment=comment 
+        )
+
+        db.session.add(medical_appointment)
+
+        try:
+            db.session.commit()
+            message = "Medical appointment created successfull"
+            statu_code = 201
+
+        except Exception as e:
+            db.session.rollback()
+            message = "Error creating moto appoinment: " + str(e)
+
+            statu_code = 500
+
+
+            # constructor
+
+            response_data = {
+                "message": message,
+                "full_name": full_name,
+                "email": email,
+                "phone": phone,
+                "cover_type": cover_type,
+                "date_of_birth": str(date_of_birth),
+                "meeting":meeting,
+                "app_date": str(app_date),
+                "app_time": app_time,
+                "comment": comment
+            }
+
+            return make_response(jsonify(response_data), statu_code)
+
+
+    def delete(self):
+        pass
+
+
+api.add_resource(MedicalAppointment, "/medicalAppointmet", "/motorAppointment/<int:id>")
