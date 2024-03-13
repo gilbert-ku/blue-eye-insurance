@@ -38,7 +38,7 @@ class CorporateAppointment(Resource):
             
             appointment_data = {
                 "full_name": corporate_appointment.full_name,
-                "company_name": appointment.company_name,
+                "company_name": corporate_appointment.company_name,
                 "email": corporate_appointment.email,
                 "phone": corporate_appointment.phone,
                 "cover_type": corporate_appointment.cover_type,
