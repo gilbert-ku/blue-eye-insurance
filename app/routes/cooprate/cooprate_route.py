@@ -29,8 +29,49 @@ parser.add_argument("app_time", type=str, help="Client's appointment time")
 parser.add_argument("comment", type=str, help="Client's comment")
 
 class CorporateAppointment(Resource):
-    def get(self):
-        pass
+    def get(self, id=None):
+        if id:
+            corporate_appointment = Corporate.query.filter_by(id=id).first()
+
+            if not corporate_appointment:
+                return {"error": "Appointment not found"}, 404
+            
+            appointment_data = {
+                "full_name": corporate_appointment.full_name,
+                "company_name": appointment.company_name,
+                "email": corporate_appointment.email,
+                "phone": corporate_appointment.phone,
+                "cover_type": corporate_appointment.cover_type,
+                "meeting":corporate_appointment.meeting,
+                "app_date": corporate_appointment.app_date.strftime("%Y-%m-%d"),
+                "app_time": corporate_appointment.app_time,
+                "comment": corporate_appointment.comment
+            }
+
+            return {"corporate Appointment": appointment_data}, 200
+        else:
+            corporate_appointments = Corporate.query.all()
+
+            motorAppointment_list = []
+
+            for appointment in corporate_appointments:
+                appointment_data ={
+                "full_name": appointment.full_name,
+                "email": appointment.email,
+                "company_name": appointment.company_name,
+                "phone": appointment.phone,
+                "cover_type": appointment.cover_type,
+                "meeting":appointment.meeting,
+                "app_date": appointment.app_date.strftime("%Y-%m-%d"),
+                "app_time": appointment.app_time,
+                "comment": appointment.comment
+                }
+
+                motorAppointment_list.append(appointment_data)
+
+            return {"corporate Appointment": motorAppointment_list}, 200
+
+
     def post(self):
         args = parser.parse_args()
 
