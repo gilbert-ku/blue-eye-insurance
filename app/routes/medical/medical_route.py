@@ -75,66 +75,88 @@ class MedicalAppointment(Resource):
     def post(self):
         args = parser.parse_args()
 
-        full_name = args["full_name"]
-        email = args["email"]
-        phone = args["phone"]
-        cover_type = args["cover_type"]
-        date_of_birth = datetime.strptime(args["date_of_birth"], "%d/%m/%Y").date()
-        meeting = args["meeting"]
-        app_date = datetime.strptime(args["app_date"], "%d/%m/%Y").date()
-        app_time = args["app_time"]
-        comment = args["comment"]
-
-
-        # instance
-
-
-        medical_appointment = Medical (
-            full_name=full_name,
-            email=email,
-            phone=phone,
-            date_of_birth=date_of_birth,
-            cover_type=cover_type,
-            meeting=meeting,
-            app_date=app_date,
-            app_time=app_time,
-            comment=comment 
-        )
-
-        db.session.add(medical_appointment)
-
         try:
+            full_name = args["full_name"]
+            email = args["email"]
+            phone = args["phone"]
+            cover_type = args["cover_type"]
+            date_of_birth = datetime.strptime(args["date_of_birth"], "%d/%m/%Y").date()
+            meeting = args["meeting"]
+            app_date = datetime.strptime(args["app_date"], "%d/%m/%Y").date()
+            app_time = args["app_time"]
+            comment = args["comment"]
+
+            medical_appointment = Medical(
+                full_name=full_name,
+                email=email,
+                phone=phone,
+                date_of_birth=date_of_birth,
+                cover_type=cover_type,
+                meeting=meeting,
+                app_date=app_date,
+                app_time=app_time,
+                comment=comment
+            )
+
+            db.session.add(medical_appointment)
             db.session.commit()
-            message = "Medical appointment created successfull"
-            statu_code = 201
-
-        except Exception as e:
-            db.session.rollback()
-            message = "Error creating moto appoinment: " + str(e)
-
-            statu_code = 500
-
-
-            # constructor
 
             response_data = {
-                "message": message,
+                "message": "Medical appointment created successfully",
                 "full_name": full_name,
                 "email": email,
                 "phone": phone,
                 "cover_type": cover_type,
                 "date_of_birth": str(date_of_birth),
-                "meeting":meeting,
+                "meeting": meeting,
                 "app_date": str(app_date),
                 "app_time": app_time,
                 "comment": comment
             }
 
-            return make_response(jsonify(response_data), statu_code)
+            return make_response(jsonify(response_data), 201)
+
+        except ValueError as e:
+            error_message = "Error parsing date: " + str(e)
+            return make_response(jsonify({"message": error_message}), 400)
+
+        except Exception as e:
+            db.session.rollback()
+            error_message = "Error creating medical appointment: " + str(e)
+            return make_response(jsonify({"message": error_message}), 500)
 
 
-    def delete(self):
-        pass
+    def delete(self, id=None):
+
+        try:
+            if id is not None:
+                appointment = Medical.query.filter_by(id=id).first()
+
+                if not appointment:
+                    return make_response("Appointment not found", 404)
+                
+                db.session.delete(appointment)
+                db.session.commit()  # Committing the deletion
+
+                return make_response("Deleted successfully", 204)
+
+            else:
+                appointments = Medical.query.all()
+
+                if not appointments:
+                    return make_response("No appointments found", 404)
+
+                for appointment in appointments:
+                    db.session.delete(appointment)
+                
+                db.session.commit()  # Committing the deletions
+
+                return make_response("Deleted successfully", 204)
+                
+        except Exception as e:
+            db.session.rollback()
+            return make_response(f"An error occurred: {str(e)}", 500)
+
 
 
 api.add_resource(MedicalAppointment, "/medicalAppointmet", "/medicalAppointmet/<int:id>")
