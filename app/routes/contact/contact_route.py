@@ -1,6 +1,5 @@
 from flask import Blueprint,jsonify, make_response
 from flask_restful import Resource, Api , reqparse
-from datetime import datetime
 from app import db
 
 from app.models.contact.contact import Contact
@@ -63,7 +62,34 @@ class ContactUs(Resource):
             error_message = "Error creating Contact appointment: " + str(e)
             return make_response(jsonify({"message": error_message}), 500)
 
-    def delete(self):
-        pass
+    def delete(self, id=None):
+        try:
+            if id is not None:
+                appointment = Contact.query.filter_by(id=id).first()
+
+                if not appointment:
+                    return make_response("Appointment not found", 404)
+                
+                db.session.delete(appointment)
+                db.session.commit()  
+
+                return make_response("Deleted successfully", 204)
+
+            else:
+                appointments = Contact.query.all()
+
+                if not appointments:
+                    return make_response("No appointments found", 404)
+
+                for appointment in appointments:
+                    db.session.delete(appointment)
+                
+                db.session.commit()  
+
+                return make_response("Deleted successfully", 204)
+                
+        except Exception as e:
+            db.session.rollback()
+            return make_response(f"An error occurred: {str(e)}", 500)
 
 api.add_resource(ContactUs, "/contactUs", "/contactUs/<int:id>")
