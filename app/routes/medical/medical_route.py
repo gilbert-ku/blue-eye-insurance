@@ -29,8 +29,48 @@ parser.add_argument("app_time", type=str, help="Client's appointment time")
 parser.add_argument("comment", type=str, help="Client's comment")
 
 class MedicalAppointment(Resource):
-    def get(self):
-        pass
+    def get(self, id=None):
+        if id:
+            medical_appointment = Medical.query.filter_by(id=id).first()
+
+            if not medical_appointment:
+                return {"error": "Appointment not found"}, 404
+            
+            appointment_data = {
+                "full_name": medical_appointment.full_name,
+                "email": medical_appointment.email,
+                "phone": medical_appointment.phone,
+                "cover_type": medical_appointment.cover_type,
+                "date_of_birth": medical_appointment.date_of_birth.strftime("%Y-%m-%d"),
+                "meeting":medical_appointment.meeting,
+                "app_date": medical_appointment.app_date.strftime("%Y-%m-%d"),
+                "app_time": medical_appointment.app_time,
+                "comment": medical_appointment.comment
+            }
+
+            return {"medical Appointment": appointment_data}, 200
+        else:
+            medical_appointments = Medical.query.all()
+
+            motorAppointment_list = []
+
+            for appointment in medical_appointments:
+                appointment_data ={
+                "full_name": appointment.full_name,
+                "email": appointment.email,
+                "phone": appointment.phone,
+                "cover_type": appointment.cover_type,
+                "date_of_birth": appointment.date_of_birth.strftime("%Y-%m-%d"),
+                "meeting":appointment.meeting,
+                "app_date": appointment.app_date.strftime("%Y-%m-%d"),
+                "app_time": appointment.app_time,
+                "comment": appointment.comment
+                }
+
+                motorAppointment_list.append(appointment_data)
+
+            return {"medical Appointment": motorAppointment_list}, 200
+        
 
     def post(self):
         args = parser.parse_args()
@@ -97,4 +137,4 @@ class MedicalAppointment(Resource):
         pass
 
 
-api.add_resource(MedicalAppointment, "/medicalAppointmet", "/motorAppointment/<int:id>")
+api.add_resource(MedicalAppointment, "/medicalAppointmet", "/medicalAppointmet/<int:id>")
