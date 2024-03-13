@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "eb84be5b6fe3e61534de32f4527d3f3447412483fcb81b4a1a735c3c81507c83"
+            "sha256": "ab8c6ab78efcf66265492c0d6d4cefc703b6bfd602229d6fdb573e22006fcf22"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -56,14 +56,21 @@
             "markers": "python_version >= '3.8'",
             "version": "==3.0.2"
         },
+        "flask-jwt": {
+            "hashes": [
+                "sha256:49c0672fbde0f1cd3374bd834918d28956e3c521c7e00089cdc5380d323bd0ad"
+            ],
+            "index": "pypi",
+            "version": "==0.3.2"
+        },
         "flask-migrate": {
             "hashes": [
-                "sha256:66ee5fbf94e815fafd5c8c07e703e981e0e7668b47c5c32ed3e5c2fd2fc8af7c",
-                "sha256:8d37f49b047e22bb0516a74b5f3f2560c0c78d5499b0e259752b41ca41817b81"
+                "sha256:5c532be17e7b43a223b7500d620edae33795df27c75811ddf32560f7d48ec617",
+                "sha256:dff7dd25113c210b069af280ea713b883f3840c1e3455274745d7355778c8622"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.6'",
-            "version": "==4.0.6"
+            "version": "==4.0.7"
         },
         "flask-restful": {
             "hashes": [
@@ -238,11 +245,18 @@
         },
         "phonenumbers": {
             "hashes": [
-                "sha256:2742071c9d0af09274c8a5b2a26d9a36acbf2ea5cb62943cc2ceadb5c0c87641",
-                "sha256:e45d0bc852516a3a6594bcec0ae47b825421a8adcfcf5f114ad148f1523d8646"
+                "sha256:947a7e645ee6b77dfdd47d47e2ab5a240f46556bf26d101424cc0bb76c1ca200",
+                "sha256:ff8cd0a786fad230d454f35998984c21e501723e22df3fa61e65dbeef0919ced"
             ],
             "index": "pypi",
-            "version": "==8.13.31"
+            "version": "==8.13.32"
+        },
+        "pyjwt": {
+            "hashes": [
+                "sha256:87a831b7a3bfa8351511961469ed0462a769724d4da48a501cb8c96d1e17f570",
+                "sha256:99fe612dbe5f41e07124d9002c118c14f3ee703574ffa9779fee78135b8b94b6"
+            ],
+            "version": "==1.4.2"
         },
         "pytz": {
             "hashes": [

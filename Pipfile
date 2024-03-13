@@ -9,6 +9,7 @@ flask-sqlalchemy = "*"
 flask-restful = "*"
 flask-migrate = "*"
 phonenumbers = "*"
+flask-jwt = "*"
 
 [dev-packages]
 
