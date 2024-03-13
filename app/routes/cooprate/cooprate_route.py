@@ -32,7 +32,58 @@ class CorporateAppointment(Resource):
     def get(self):
         pass
     def post(self):
-        pass
+        args = parser.parse_args()
+
+        try:
+            full_name = args["full_name"]
+            company_name = args["company_name"]
+            email = args["email"]
+            phone = args["phone"]
+            cover_type = args["cover_type"]
+            meeting = args["meeting"]
+            app_date = datetime.strptime(args["app_date"], "%d/%m/%Y").date()
+            app_time = args["app_time"]
+            comment = args["comment"]
+
+            medical_appointment = Corporate(
+                full_name=full_name,
+                company_name=company_name,
+                email=email,
+                phone=phone,
+                cover_type=cover_type,
+                meeting=meeting,
+                app_date=app_date,
+                app_time=app_time,
+                comment=comment
+            )
+
+            db.session.add(medical_appointment)
+            db.session.commit()
+
+            response_data = {
+                "message": "Medical appointment created successfully",
+                "full_name": full_name,
+                "company_name": company_name,
+                "email": email,
+                "phone": phone,
+                "cover_type": cover_type,
+                "meeting": meeting,
+                "app_date": str(app_date),
+                "app_time": app_time,
+                "comment": comment
+            }
+
+            return make_response(jsonify(response_data), 201)
+        
+        except ValueError as e:
+            error_message = "Error parsing date: " + str(e)
+            return make_response(jsonify({"message": error_message}), 400)
+        
+        except Exception as e:
+            db.session.rollback()
+            error_message = "Error creating medical appointment: " + str(e)
+            return make_response(jsonify({"message": error_message}), 500)
+
     def delete(self):
         pass
 
