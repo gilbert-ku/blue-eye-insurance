@@ -22,8 +22,38 @@ parser.add_argument("phone", type=str, help="Client's phone")
 parser.add_argument("comment", type=str, help="Client's comment")
 
 class ContactUs(Resource):
-    def get(self):
-        pass
+    def get(self, id=None):
+        if id:
+            contact_appointment = Contact.query.filter_by(id=id).first()
+
+            if not contact_appointment:
+                return {"error": "Appointment not found"}, 404
+            
+            appointment_data = {
+                "full_name": contact_appointment.full_name,
+                "email": contact_appointment.email,
+                "phone": contact_appointment.phone,
+                "comment": contact_appointment.comment
+            }
+
+            return {"contact Appointment": appointment_data}, 200
+        else:
+            contact_appointments = Contact.query.all()
+
+            motorAppointment_list = []
+
+            for appointment in contact_appointments:
+                appointment_data ={
+                "full_name": appointment.full_name,
+                "email": appointment.email,
+                "phone": appointment.phone,
+                "comment": appointment.comment
+                }
+
+                motorAppointment_list.append(appointment_data)
+
+            return {"contact Appointment": motorAppointment_list}, 200
+        
     def post(self):
         args = parser.parse_args()
 
