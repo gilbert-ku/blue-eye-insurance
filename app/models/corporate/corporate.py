@@ -1,8 +1,8 @@
 from app import db
 import datetime
 
-class Cooprate(db.Model):
-    __tablename__ = "coopretes"
+class Corporate(db.Model):
+    __tablename__ = "corporate"
 
     id = db.Column(db.Integer, primary_key=True)
     full_name = db.Column(db.String(100), nullable=False)
@@ -26,8 +26,8 @@ class Cooprate(db.Model):
             "phone": self.phone,
             "cover_type": self.cover_type,
             "meeting": self.meeting,
-            "app_date": self.app_date,
+            "app_date": self.app_date.strftime("%m%d%Y"),
             "app_time": self.app_time,
             "comment": self.comment,
-            "created_at": self.created_at,
+            "created_at": self.created_at.strftime("%m/%d/%Y %H:%M:%S")
         }
