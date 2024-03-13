@@ -10,4 +10,12 @@ class Contact(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow, nullable=False )
 
 
-
+    def to_dict(self):
+        return{
+            "id": self.id,
+            "full_name": self.full_name,
+            "phone": self.phone,
+            "email": self.email,
+            "comment": self.comment,
+            "created_at": self.created_at.strftime("%m/%d/%Y %H:%M:%S")
+        }
