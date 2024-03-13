@@ -47,37 +47,37 @@ class UserAdmin(Resource):
         try:
             full_name = args["full_name"]
             email = args["email"]
-            phone =args["phone"]
+            phone = args["phone"]
             password = args["password"]
 
-            admin_users = Admin (
-
-                full_name = full_name,
-                email = email,
-                phone = phone,
-                password = password
+            admin_user = Admin(
+                full_name=full_name,
+                email=email,
+                phone=phone,
+                password=password
             )
 
-            db.session.add(admin_users)
+            db.session.add(admin_user)
             db.session.commit()
 
             admin_data = {
-                "message": "Medical appointment created successfully",
+                "message": "Admin user created successfully",
                 "full_name": full_name,
                 "email": email,
                 "phone": phone,
-                "password": password
+                "password":password
             }
 
             return make_response(jsonify(admin_data), 201)
-        
-        except ValueError as e :
-            error_message = "Error parsing date: " + str(e)
+
+        except ValueError as e:
+            error_message = "Error parsing data: " + str(e)
             return make_response(jsonify({"message": error_message}), 400)
-        
+
         except Exception as e:
             db.session.rollback()
-            error_message = "Error create admin: " + str(e)
+            error_message = "Error creating admin: " + str(e)
             return make_response(jsonify({"message": error_message}))
+
 
 api.add_resource(UserAdmin, "/admin")

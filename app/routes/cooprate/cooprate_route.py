@@ -102,7 +102,7 @@ class CorporateAppointment(Resource):
             db.session.commit()
 
             response_data = {
-                "message": "Medical appointment created successfully",
+                "message": "Corporate appointment created successfully",
                 "full_name": full_name,
                 "company_name": company_name,
                 "email": email,
