@@ -2,11 +2,13 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from app.config.development import DevelopmentConfig
+from flask_jwt_extended import JWTManager
 
 app = Flask(__name__)
 app.config.from_object(DevelopmentConfig)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+jwt = JWTManager(app)
 
 from app.routes.financial_planning.financial_planning import finacial_blueprint
 from app.routes.investment.investment_routing import investment_blueprint

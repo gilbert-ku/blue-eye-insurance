@@ -11,6 +11,7 @@ flask-migrate = "*"
 phonenumbers = "*"
 flask-jwt = "*"
 passlib = "*"
+flask-jwt-extended = "*"
 
 [dev-packages]
 
