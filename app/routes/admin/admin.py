@@ -1,8 +1,8 @@
 from flask import Blueprint,jsonify, make_response
 from flask_restful import Resource, Api , reqparse
-from datetime import datetime
 from app import db
-
+from werkzeug.security import generate_password_hash, check_password_hash
+# from passlib.hash import sha256_crypt
 
 
 
@@ -27,7 +27,7 @@ parser.add_argument("password", type=str, help="Client's password")
 
 
 class UserAdmin(Resource):
-    def get(self, id=None):
+    def get(self):
         Admin_appointments = Admin.query.all()
 
         admin_list = []
@@ -44,6 +44,8 @@ class UserAdmin(Resource):
     def post(self):
         args = parser.parse_args()
 
+        hashed_password = generate_password_hash(args["password"], method="pbkdf2:sha256")
+
         try:
             full_name = args["full_name"]
             email = args["email"]
@@ -54,7 +56,7 @@ class UserAdmin(Resource):
                 full_name=full_name,
                 email=email,
                 phone=phone,
-                password=password
+                password=hashed_password
             )
 
             db.session.add(admin_user)
@@ -65,7 +67,7 @@ class UserAdmin(Resource):
                 "full_name": full_name,
                 "email": email,
                 "phone": phone,
-                "password":password
+                "password": hashed_password
             }
 
             return make_response(jsonify(admin_data), 201)
