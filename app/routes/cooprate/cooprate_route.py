@@ -2,6 +2,8 @@ from flask import Blueprint,jsonify, make_response
 from flask_restful import Resource, Api , reqparse
 from datetime import datetime
 from app import db
+from flask_jwt_extended import jwt_required
+
 
 from app.models.corporate.corporate import Corporate
 
@@ -9,7 +11,9 @@ corporate_blueprint = Blueprint("corporate", __name__, url_prefix="/corporate_ro
 
 api = Api(corporate_blueprint)
 
+
 class CorporateApi(Resource):
+    @jwt_required()
     def get(self):
         return{"Corporate Appointment Api": "Welcome to corporate Api, This route is responsible in handling corporate appointment"}
     
@@ -29,6 +33,7 @@ parser.add_argument("app_time", type=str, help="Client's appointment time")
 parser.add_argument("comment", type=str, help="Client's comment")
 
 class CorporateAppointment(Resource):
+    @jwt_required()
     def get(self, id=None):
         if id:
             corporate_appointment = Corporate.query.filter_by(id=id).first()
@@ -71,7 +76,7 @@ class CorporateAppointment(Resource):
 
             return {"corporate Appointment": motorAppointment_list}, 200
 
-
+    @jwt_required()
     def post(self):
         args = parser.parse_args()
 
@@ -125,6 +130,7 @@ class CorporateAppointment(Resource):
             error_message = "Error creating medical appointment: " + str(e)
             return make_response(jsonify({"message": error_message}), 500)
 
+    @jwt_required()
     def delete(self, id=None):
         
         try:

@@ -2,6 +2,8 @@ from flask import Blueprint,jsonify, make_response
 from flask_restful import Resource, Api , reqparse
 from datetime import datetime
 from app import db
+from flask_jwt_extended import jwt_required
+
 
 from app.models.motor.motor import Motor
 
@@ -10,6 +12,7 @@ motor_blueprint = Blueprint("motor", __name__, url_prefix="/motor_routes")
 api = Api(motor_blueprint)
 
 class MotorApi(Resource):
+    @jwt_required()
     def get(self):
         return{"Motor Api": "Welcome to motor Api, This rout is responsible in handling motor appointments"}
 
@@ -31,6 +34,7 @@ parser.add_argument("app_time", type=str, help="Client's app time prefrance")
 parser.add_argument("comment", type=str, help="Client's app comments")
 
 class MotorAppointment(Resource):
+    @jwt_required()
     def get(self, id=None):
         if id:
             # Retrieve a single appointment by ID
@@ -79,8 +83,9 @@ class MotorAppointment(Resource):
             return {"motor Appointments": motorAppointment_list}, 200
 
 
-    
+    @jwt_required()
     def post(self):
+
         args = parser.parse_args()
 
         # access parsed arg
@@ -147,7 +152,8 @@ class MotorAppointment(Resource):
             # return responce
 
             return make_response(jsonify(response_data), status_code)
-        
+
+    @jwt_required()   
     def delete(self, id=None):
         try:
             if id is not None: 

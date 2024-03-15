@@ -3,6 +3,8 @@ from flask_restful import Resource, Api,reqparse
 from datetime import datetime, date
 from app import db
 from app.models.financial_planning.financial_planning import FinancialPlanning 
+from flask_jwt_extended import jwt_required
+
 
 
 
@@ -11,6 +13,7 @@ finacial_blueprint = Blueprint("financial_planning", __name__, url_prefix='/fina
 api = Api(finacial_blueprint)
 
 class Welcome(Resource):
+    @jwt_required()
     def get(self):
         return{"Financial Planning": "welcome to financial planning route"}
     
@@ -30,7 +33,7 @@ parser.add_argument("comment", type=str, help="client's comment and question")
 
 
 class FinancialPlanningAppointment(Resource):
-    
+    @jwt_required()
     def get(self):
         # Get all financial planning appointments
 
@@ -51,6 +54,7 @@ class FinancialPlanningAppointment(Resource):
 
         return {"Financial Planning Appointments": appointment_list}, 200
 
+    @jwt_required()
     def post(self):
     # Parse the request arguments
         args = parser.parse_args()
@@ -107,6 +111,7 @@ class FinancialPlanningAppointment(Resource):
         # Return response with parsed arguments and message
         return make_response(jsonify(response_data), status_code)
 
+    @jwt_required()
     def delete(self, id=None):
         try:
             if id is not None:

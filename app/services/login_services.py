@@ -2,10 +2,10 @@ from flask import make_response, request, jsonify
 from werkzeug.security import check_password_hash
 from flask_jwt_extended import create_access_token
 from app.models.admin.admin import Admin
-from functools import wraps
-import jwt
-import app
-from app.config.development import DevelopmentConfig
+# from functools import wraps
+# import jwt
+# import app
+# from app.config.development import DevelopmentConfig
 
 def authenticate(email, password):
     # Query the database to find the admin by email
@@ -34,25 +34,28 @@ def login(email, password):
 
     return None
 
-def token_required(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        access_token = None
+
+# i can use this is i have one admin
+
+# def token_required(f):
+#     @wraps(f)
+#     def decorated(*args, **kwargs):
+#         access_token = None
 
 
-        if "x-access-token" in request.headers:
-            return request.headers["x-access-token"]
+#         if "x-access-token" in request.headers:
+#             return request.headers["x-access-token"]
         
-        if not access_token:
-            return jsonify({"message" : "Token is missing!"}), 401
+#         if not access_token:
+#             return jsonify({"message" : "Token is missing!"}), 401
         
-        try:
-            data =jwt.decode(access_token, app.config.from_object(DevelopmentConfig))
-            current_admin = Admin.query.filter_by(id=data[id]).first()
+#         try:
+#             data =jwt.decode(access_token, app.config.from_object(DevelopmentConfig))
+#             current_admin = Admin.query.filter_by(id=data[id]).first()
 
-        except:
-            return jsonify({"message" : "Token is invalid!"}), 401
+#         except:
+#             return jsonify({"message" : "Token is invalid!"}), 401
         
-        return f(current_admin, *args, **kwargs)
+#         return f(current_admin, *args, **kwargs)
     
-    return decorated
+#     return decorated

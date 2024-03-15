@@ -1,7 +1,7 @@
 from flask import Blueprint,jsonify, make_response
 from flask_restful import Resource, Api , reqparse
 from app import db
-from app.services.login_services import token_required
+# from app.services.login_services import token_required
 from flask_jwt_extended import jwt_required
 
 
@@ -12,6 +12,7 @@ contact_blueprint = Blueprint("contactUs", __name__, url_prefix="/contact_route"
 api = Api(contact_blueprint)
 
 class ContactApi(Resource):
+    @jwt_required
     def get(self):
         return{"Contact Us Appointment Api": "Welcome to Contact Us Api, This route is responsible in handling Contact Us appointment"}
     

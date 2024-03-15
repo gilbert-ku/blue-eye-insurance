@@ -3,12 +3,15 @@ from flask_restful import Resource, Api, reqparse
 from datetime import datetime, date
 from app import db
 from app.models.investment.investing import Investment
+from flask_jwt_extended import jwt_required
+
 
 investment_blueprint = Blueprint("investment", __name__, url_prefix="/investment_route")
 
 api = Api(investment_blueprint)
 
 class Investment_planning(Resource):
+    @jwt_required()
     def get(self):
         return{"Investment planning": "Welcome to investment api, this route is responsible for educational and saving plans"}
     
@@ -27,6 +30,7 @@ parser.add_argument("app_time", type=str, help="Client's app_time")
 parser.add_argument("comment", type=str, help="Client's commwnt")
 
 class InvestmentAppointment(Resource):
+    @jwt_required()
     def get(self):
         
         # get all
@@ -51,6 +55,7 @@ class InvestmentAppointment(Resource):
 
         return {"Investment Appointments" : appoinment_list}, 200
 
+    @jwt_required()
     def post(self):
         # Parse the request arguments
         args = parser.parse_args()
@@ -111,7 +116,7 @@ class InvestmentAppointment(Resource):
 
         return make_response(jsonify(response_data), status_code)
 
-
+    @jwt_required()
     def delete(self, id):
         try:
             invest_appointment = Investment.query.filter_by(id=id).first()
