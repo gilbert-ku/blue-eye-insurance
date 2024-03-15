@@ -83,7 +83,7 @@ class MotorAppointment(Resource):
             return {"motor Appointments": motorAppointment_list}, 200
 
 
-    @jwt_required()
+    # @jwt_required()
     def post(self):
         # Parse arguments
         args = parser.parse_args()

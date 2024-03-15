@@ -74,7 +74,7 @@ class MedicalAppointment(Resource):
 
             return {"medical Appointment": motorAppointment_list}, 200
         
-    @jwt_required()
+    # @jwt_required()
     def post(self):
         
         args = parser.parse_args()

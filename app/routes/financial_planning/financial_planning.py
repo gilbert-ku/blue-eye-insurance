@@ -54,7 +54,7 @@ class FinancialPlanningAppointment(Resource):
 
         return {"Financial Planning Appointments": appointment_list}, 200
 
-    @jwt_required()
+    # @jwt_required()
     def post(self):
     # Parse the request arguments
         args = parser.parse_args()
