@@ -18,16 +18,26 @@ Error handling is implemented using try-except blocks, ensuring graceful handlin
 The folder structure of the BEIA API is organized as follows:
 
 ├── app
+
 │   ├── config
+
 │   ├── models
+
 │   ├── routes
+
 │   └── services
+
 ├── instance
+
 ├── migrations
+
 ├── Pipfile
+
 ├── Pipfile.lock
+
 └── run.py
-Installation and Setup
+
+### Installation and Setup
 To set up and run the BEIA API locally, follow these steps:
 
 ### Clone the repository.
