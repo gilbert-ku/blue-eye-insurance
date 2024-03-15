@@ -1,6 +1,9 @@
 from flask import Blueprint,jsonify, make_response
 from flask_restful import Resource, Api , reqparse
 from app import db
+from app.services.login_services import token_required
+from flask_jwt_extended import jwt_required
+
 
 from app.models.contact.contact import Contact
 
@@ -22,7 +25,11 @@ parser.add_argument("phone", type=str, help="Client's phone")
 parser.add_argument("comment", type=str, help="Client's comment")
 
 class ContactUs(Resource):
+    
+    @jwt_required()
+    # @token_required
     def get(self, id=None):
+        
         if id:
             contact_appointment = Contact.query.filter_by(id=id).first()
 
@@ -40,7 +47,7 @@ class ContactUs(Resource):
         else:
             contact_appointments = Contact.query.all()
 
-            motorAppointment_list = []
+            contactAppointment_list = []
 
             for appointment in contact_appointments:
                 appointment_data ={
@@ -50,10 +57,11 @@ class ContactUs(Resource):
                 "comment": appointment.comment
                 }
 
-                motorAppointment_list.append(appointment_data)
+                contactAppointment_list.append(appointment_data)
 
-            return {"contact Appointment": motorAppointment_list}, 200
-        
+            return {"contact Appointment": contactAppointment_list}, 200
+    
+    @jwt_required()
     def post(self):
         args = parser.parse_args()
 
@@ -92,6 +100,7 @@ class ContactUs(Resource):
             error_message = "Error creating Contact appointment: " + str(e)
             return make_response(jsonify({"message": error_message}), 500)
 
+    @jwt_required()
     def delete(self, id=None):
         try:
             if id is not None:

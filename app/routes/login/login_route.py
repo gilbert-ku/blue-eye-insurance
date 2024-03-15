@@ -1,6 +1,6 @@
-from flask import Blueprint,jsonify, request
+from flask import Blueprint,jsonify, request, make_response
 from flask_restful import Resource, Api , reqparse
-from app.models.admin import admin
+from app.models.admin.admin import Admin
 from app import db
 from app.services.login_services import login
 from flask_jwt_extended import jwt_required
@@ -28,8 +28,12 @@ class AdminLogin(Resource):
 
         # Check if email and password are provided
         if not email or not password:
-            return jsonify({"Message": "Email and password are required"}), 400
-
+            # return jsonify({"Message": "Email and password are required"}), 400
+            return make_response("Could not verify", 401, {"WWW-Authenticate" : "Basic realm='Loging required!"})
+        
+        if not email and not password:
+            return make_response("Could not verify", 401, {"WWW-Authenticate" : "Basic realm='Loging required!"})
+        
         # Authenticate the admin using the login function from services
         access_token = login(email, password)
 

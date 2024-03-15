@@ -1,6 +1,11 @@
+from flask import make_response, request, jsonify
 from werkzeug.security import check_password_hash
 from flask_jwt_extended import create_access_token
 from app.models.admin.admin import Admin
+from functools import wraps
+import jwt
+import app
+from app.config.development import DevelopmentConfig
 
 def authenticate(email, password):
     # Query the database to find the admin by email
@@ -10,6 +15,8 @@ def authenticate(email, password):
     if admin and check_password_hash(admin.password, password):
         return admin
 
+    if not admin:
+        return make_response("Could not verify", 401, {"WWW-Authenticate" : "Basic realm='Loging required!"})
 def identify(payload):
     # Extract admin id from the JWT payload
     admin_id = payload["identity"]
@@ -26,3 +33,26 @@ def login(email, password):
         return access_token
 
     return None
+
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        access_token = None
+
+
+        if "x-access-token" in request.headers:
+            return request.headers["x-access-token"]
+        
+        if not access_token:
+            return jsonify({"message" : "Token is missing!"}), 401
+        
+        try:
+            data =jwt.decode(access_token, app.config.from_object(DevelopmentConfig))
+            current_admin = Admin.query.filter_by(id=data[id]).first()
+
+        except:
+            return jsonify({"message" : "Token is invalid!"}), 401
+        
+        return f(current_admin, *args, **kwargs)
+    
+    return decorated
