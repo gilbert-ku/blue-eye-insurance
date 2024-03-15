@@ -85,10 +85,10 @@ class MotorAppointment(Resource):
 
     @jwt_required()
     def post(self):
-
+        # Parse arguments
         args = parser.parse_args()
-
-        # access parsed arg
+        
+        # Access parsed arguments
         full_name = args["full_name"]
         email = args["email"]
         phone = args["phone"]
@@ -101,11 +101,8 @@ class MotorAppointment(Resource):
         app_time = args["app_time"]
         comment = args["comment"]
 
-
-        # create an instacne
-
+        # Create a Motor instance
         motor_appointment = Motor (
-
             full_name=full_name,
             email=email,
             phone=phone,
@@ -131,27 +128,24 @@ class MotorAppointment(Resource):
             message = "Error creating motor appointment: " + str(e)
             status_code = 500
 
+        # Construct response data
+        response_data ={
+            "message": message,
+            "full_name": full_name,
+            "email": email,
+            "phone": phone,
+            "category": category,
+            "cover_type": cover_type,
+            "year_manufc": year_manufc,
+            "valuation": valuation,
+            "meeting":meeting,
+            "app_date": str(app_date),
+            "app_time": app_time,
+            "comment": comment
+        }
 
-        # constructor
-            
-            response_data ={
-                "message": message,
-                "full_name": full_name,
-                "email": email,
-                "phone": phone,
-                "category": category,
-                "cover_type": cover_type,
-                "year_manufc": year_manufc,
-                "valuation": valuation,
-                "meeting":meeting,
-                "app_date": str(app_date),
-                "app_time": app_time,
-                "comment": comment
-            }
-
-            # return responce
-
-            return make_response(jsonify(response_data), status_code)
+        # Return response
+        return make_response(jsonify(response_data), status_code)
 
     @jwt_required()   
     def delete(self, id=None):
