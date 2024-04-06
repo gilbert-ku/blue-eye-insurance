@@ -87,7 +87,7 @@ class CorporateAppointment(Resource):
             phone = args["phone"]
             cover_type = args["cover_type"]
             meeting = args["meeting"]
-            app_date = datetime.strptime(args["app_date"], "%d/%m/%Y").date()
+            app_date = datetime.strptime(args["app_date"], "%Y-%m-%d").date()
             app_time = args["app_time"]
             comment = args["comment"]
 
