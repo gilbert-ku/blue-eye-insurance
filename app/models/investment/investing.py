@@ -1,5 +1,5 @@
 from app import db
-import datetime
+from datetime import datetime, timezone
 
 class Investment(db.Model):
     __tablename__ = "investment"
@@ -8,13 +8,13 @@ class Investment(db.Model):
     full_name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False)
     phone = db.Column(db.String(15), nullable=False)
-    no_children = db.Column(db.Integer, nullable=False)
+    principal_dob = db.Column(db.Date, nullable=False)
     solution = db.Column(db.String(100), nullable=False)
     meeting = db.Column(db.String(100), nullable=False)
     app_date = db.Column(db.Date, nullable=False) 
     app_time = db.Column(db.String, nullable=False)  
     comment = db.Column(db.String(300), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow, nullable=False )
+    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc), nullable=False)
 
 
     def to_dict(self):
@@ -23,10 +23,10 @@ class Investment(db.Model):
             'full_name': self.full_name,
             'email': self.email,
             'phone': self.phone,
-            'no_children': self.no_children,
+            'principal_dob': self.principal_dob.strftime("%Y-%m-%d"),
             'solution': self.solution,
             'meeting': self.meeting,
-            'app_date': self.app_date.strftime("%m%d%Y"),
+            'app_date': self.app_date.strftime("%Y-%m-%d"),
             'app_time': self.app_time,
             'comment': self.comment,
             'created_at': self.created_at.strftime("%m/%d%Y %H:%M:%S")

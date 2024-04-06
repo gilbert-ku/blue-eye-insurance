@@ -21,7 +21,7 @@ parser = reqparse.RequestParser()
 parser.add_argument("full_name", type=str, help="Client's Name")
 parser.add_argument("email", type=str, help="Client's email")
 parser.add_argument("phone", type=str, help="Client's phone")
-parser.add_argument("no_children", type=str, help="Client's no_children")
+parser.add_argument("principal_dob", type=str, help="Client's principal_dob")
 parser.add_argument("solution", type=str, help="Client's solution")
 parser.add_argument("meeting", type=str, help="Client's meeting")
 parser.add_argument("app_date", type=str, help="Client's app_date")
@@ -43,7 +43,7 @@ class InvestmentAppointment(Resource):
                 "full_name" : appointment.full_name,
                 "email" : appointment.email,
                 "phone" : appointment.phone,
-                "no_children" : appointment.no_children,
+                "principal_dob" : appointment.principal_dob.strftime("%d-%m-%Y"),
                 "solution" : appointment.solution,
                 "meeting" : appointment.meeting,
                 # Convert app_date to string for response
@@ -64,10 +64,10 @@ class InvestmentAppointment(Resource):
         full_name = args["full_name"]
         email = args["email"]
         phone = args["phone"]
-        no_children = args["no_children"]
+        principal_dob = datetime.strptime(args["principal_dob"], "%Y-%m-%d").date()
         solution = args["solution"]
         meeting = args["meeting"]
-        app_date = datetime.strptime(args["app_date"], "%m/%d/%Y").date() #convert time to python date object
+        app_date = datetime.strptime(args["app_date"], "%Y-%m-%d").date() #convert time to python date object
         app_time = args["app_time"]
         comment = args["comment"]
 
@@ -76,7 +76,7 @@ class InvestmentAppointment(Resource):
             full_name = full_name,
             email = email,
             phone = phone,
-            no_children = no_children,
+            principal_dob = principal_dob,
             solution = solution,
             meeting = meeting,
             app_date = app_date,
@@ -105,7 +105,7 @@ class InvestmentAppointment(Resource):
             "full_name": full_name,
             "email": email,
             "phone": phone,
-            "no_children": no_children,
+            "principal_dob": str(principal_dob),
             "solution": solution,
             "meeting": meeting,
             # Convert app_date back to string for response
