@@ -142,17 +142,7 @@ class MotorAppointment(Resource):
         # Construct response data
         response_data ={
             "message": message,
-            "full_name": full_name,
-            "email": email,
-            "phone": phone,
-            "vehicleUse": vehicleUse,
-            "cover_type": cover_type,
-            "year_manufc": year_manufc,
-            "valuation": valuation,
-            "meeting":meeting,
-            "app_date": str(app_date),
-            "app_time": app_time,
-            "comment": comment
+            
         }
 
         # Return response
