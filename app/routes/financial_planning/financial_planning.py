@@ -8,7 +8,7 @@ from flask_jwt_extended import jwt_required
 
 
 
-finacial_blueprint = Blueprint("financial_planning", __name__, url_prefix='/financial_planning')
+finacial_blueprint = Blueprint("financial_planning", __name__, url_prefix='/financial_routing')
 
 api = Api(finacial_blueprint)
 
@@ -65,7 +65,7 @@ class FinancialPlanningAppointment(Resource):
         phone = args["phone"]
         employment = args["employment"]
         meeting = args["meeting"]
-        app_date = datetime.strptime(args["app_date"], "%m/%d/%Y").date()
+        app_date = datetime.strptime(args["app_date"], "%Y-%m-%d").date()
         app_time = args["app_time"]
         comment = args["comment"]
 
