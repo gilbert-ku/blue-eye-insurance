@@ -24,7 +24,7 @@ parser = reqparse.RequestParser()
 parser.add_argument("full_name", type=str, help="Client's Name")
 parser.add_argument("email", type=str, help="Client's email")
 parser.add_argument("phone", type=str, help="Client's phone")
-parser.add_argument("category", type=str, help="category of insurance name")
+parser.add_argument("vehicleUse", type=str, help="vehicleUse of insurance name")
 parser.add_argument("cover_type", type=str, help="type of cover")
 parser.add_argument("year_manufc", type=str, help="motor year of manufac")
 parser.add_argument("valuation", type=str, help="Client's car valuation")
@@ -47,7 +47,7 @@ class MotorAppointment(Resource):
                 "full_name": motor_appointment.full_name,
                 "email": motor_appointment.email,
                 "phone": motor_appointment.phone,
-                "category": motor_appointment.category,
+                "vehicleUse": motor_appointment.vehicleUse,
                 "cover_type": motor_appointment.cover_type,
                 "year_manufc": motor_appointment.year_manufc,
                 "valuation": motor_appointment.valuation,
@@ -69,7 +69,7 @@ class MotorAppointment(Resource):
                     "full_name": appointment.full_name,
                     "email": appointment.email,
                     "phone": appointment.phone,
-                    "category": appointment.category,
+                    "vehicleUse": appointment.vehicleUse,
                     "cover_type": appointment.cover_type,
                     "year_manufc": appointment.year_manufc,
                     "valuation": appointment.valuation,
@@ -92,21 +92,32 @@ class MotorAppointment(Resource):
         full_name = args["full_name"]
         email = args["email"]
         phone = args["phone"]
-        category = args["category"]
+        vehicleUse = args["vehicleUse"]
         cover_type = args["cover_type"]
         year_manufc = args["year_manufc"]
         valuation = args["valuation"]
         meeting = args["meeting"]
-        app_date = datetime.strptime(args["app_date"], "%m/%d/%Y").date()
+        # app_date = datetime.strptime(args["app_date"], "%Y/%m/%d").date()
+        # app_date =  datetime.strptime(str(args["app_date"]), '%Y-%m-%d').date()
+        app_date = args.get("app_date")
         app_time = args["app_time"]
         comment = args["comment"]
+
+        if app_date:
+            try:
+                app_date = datetime.strptime(app_date, "%Y-%m-%d").date()
+            except ValueError:
+                return make_response(jsonify({"message": "Invalid date format for app_date"}), 400)
+        else:
+            return make_response(jsonify({"message": "app_date is required"}), 400)
+
 
         # Create a Motor instance
         motor_appointment = Motor (
             full_name=full_name,
             email=email,
             phone=phone,
-            category=category,
+            vehicleUse=vehicleUse,
             cover_type=cover_type,
             year_manufc=year_manufc,
             valuation=valuation,
@@ -134,7 +145,7 @@ class MotorAppointment(Resource):
             "full_name": full_name,
             "email": email,
             "phone": phone,
-            "category": category,
+            "vehicleUse": vehicleUse,
             "cover_type": cover_type,
             "year_manufc": year_manufc,
             "valuation": valuation,
