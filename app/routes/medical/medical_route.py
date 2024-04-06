@@ -84,9 +84,9 @@ class MedicalAppointment(Resource):
             email = args["email"]
             phone = args["phone"]
             cover_type = args["cover_type"]
-            date_of_birth = datetime.strptime(args["date_of_birth"], "%d/%m/%Y").date()
+            date_of_birth = datetime.strptime(args["date_of_birth"], "%Y-%m-%d").date()
             meeting = args["meeting"]
-            app_date = datetime.strptime(args["app_date"], "%d/%m/%Y").date()
+            app_date = datetime.strptime(args["app_date"], "%Y-%m-%d").date()
             app_time = args["app_time"]
             comment = args["comment"]
 
