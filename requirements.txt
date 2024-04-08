@@ -20,7 +20,7 @@ MarkupSafe==2.1.5
 passlib==1.7.4
 phonenumbers==8.13.34
 pycparser==2.22
-PyJWT==2.8.0
+PyJWT
 pytz==2024.1
 six==1.16.0
 SQLAlchemy==2.0.29
