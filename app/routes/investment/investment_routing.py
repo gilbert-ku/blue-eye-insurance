@@ -102,16 +102,16 @@ class InvestmentAppointment(Resource):
 
         response_data = {
             "message": message,
-            "full_name": full_name,
-            "email": email,
-            "phone": phone,
-            "principal_dob": str(principal_dob),
-            "solution": solution,
-            "meeting": meeting,
-            # Convert app_date back to string for response
-            "app_date": str(app_date),
-            "app_time": app_time,
-            "comment": comment
+            # "full_name": full_name,
+            # "email": email,
+            # "phone": phone,
+            # "principal_dob": str(principal_dob),
+            # "solution": solution,
+            # "meeting": meeting,
+            # # Convert app_date back to string for response
+            # "app_date": str(app_date),
+            # "app_time": app_time,
+            # "comment": comment
         }
 
         return make_response(jsonify(response_data), status_code)

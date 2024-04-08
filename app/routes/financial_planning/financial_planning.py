@@ -98,14 +98,14 @@ class FinancialPlanningAppointment(Resource):
         # Construct response JSON object
         response_data = {
             "message": message,
-            "full_name": full_name,
-            "email": email,
-            "phone": phone,
-            "employment": employment,
-            "meeting": meeting,
-            "app_date": str(app_date),  # Convert app_date back to string for response
-            "app_time": app_time,
-            "comment": comment
+            # "full_name": full_name,
+            # "email": email,
+            # "phone": phone,
+            # "employment": employment,
+            # "meeting": meeting,
+            # "app_date": str(app_date),  # Convert app_date back to string for response
+            # "app_time": app_time,
+            # "comment": comment
         }
 
         # Return response with parsed arguments and message

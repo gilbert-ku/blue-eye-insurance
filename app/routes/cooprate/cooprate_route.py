@@ -108,15 +108,15 @@ class CorporateAppointment(Resource):
 
             response_data = {
                 "message": "Corporate appointment created successfully",
-                "full_name": full_name,
-                "company_name": company_name,
-                "email": email,
-                "phone": phone,
-                "cover_type": cover_type,
-                "meeting": meeting,
-                "app_date": str(app_date),
-                "app_time": app_time,
-                "comment": comment
+                # "full_name": full_name,
+                # "company_name": company_name,
+                # "email": email,
+                # "phone": phone,
+                # "cover_type": cover_type,
+                # "meeting": meeting,
+                # "app_date": str(app_date),
+                # "app_time": app_time,
+                # "comment": comment
             }
 
             return make_response(jsonify(response_data), 201)
