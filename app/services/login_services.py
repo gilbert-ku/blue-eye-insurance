@@ -4,7 +4,6 @@ from flask_jwt_extended import create_access_token
 from app.models.admin.admin import Admin
 # from functools import wraps
 # import app
-# from app.config.development import DevelopmentConfig
 
 def authenticate(email, password):
     # Query the database to find the admin by email
