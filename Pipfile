@@ -5,14 +5,7 @@ name = "pypi"
 
 [packages]
 flask = "*"
-flask-sqlalchemy = "*"
-flask-restful = "*"
-flask-migrate = "*"
-phonenumbers = "*"
-flask-jwt = "*"
-passlib = "*"
-flask-jwt-extended = "*"
-flask-cors = "*"
+pyjwt = "==2.0.1"
 
 [dev-packages]
 
