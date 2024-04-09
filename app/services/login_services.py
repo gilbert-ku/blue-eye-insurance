@@ -3,7 +3,6 @@ from werkzeug.security import check_password_hash
 from flask_jwt_extended import create_access_token
 from app.models.admin.admin import Admin
 # from functools import wraps
-# import jwt
 # import app
 # from app.config.development import DevelopmentConfig
 
@@ -35,7 +34,7 @@ def login(email, password):
     return None
 
 
-# i can use this is i have one admin
+# i can use this if have one admin
 
 # def token_required(f):
 #     @wraps(f)
