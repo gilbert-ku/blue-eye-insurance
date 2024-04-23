@@ -1,8 +1,8 @@
-"""Initial migration
+"""initial migration
 
-Revision ID: e9f5143e7b8a
+Revision ID: 4c30880f2e2d
 Revises: 
-Create Date: 2024-04-06 13:08:47.576251
+Create Date: 2024-04-24 00:12:30.828517
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'e9f5143e7b8a'
+revision = '4c30880f2e2d'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -46,7 +46,7 @@ def upgrade():
     sa.Column('meeting', sa.String(length=100), nullable=False),
     sa.Column('app_date', sa.Date(), nullable=False),
     sa.Column('app_time', sa.String(), nullable=False),
-    sa.Column('comment', sa.String(length=300), nullable=False),
+    sa.Column('comment', sa.String(length=300), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
@@ -59,7 +59,7 @@ def upgrade():
     sa.Column('meeting', sa.String(length=100), nullable=False),
     sa.Column('app_date', sa.Date(), nullable=False),
     sa.Column('app_time', sa.String(), nullable=False),
-    sa.Column('comment', sa.String(length=300), nullable=False),
+    sa.Column('comment', sa.String(length=300), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
@@ -68,12 +68,12 @@ def upgrade():
     sa.Column('full_name', sa.String(length=100), nullable=False),
     sa.Column('email', sa.String(length=100), nullable=False),
     sa.Column('phone', sa.String(length=15), nullable=False),
-    sa.Column('no_children', sa.Integer(), nullable=False),
+    sa.Column('principal_dob', sa.Date(), nullable=False),
     sa.Column('solution', sa.String(length=100), nullable=False),
     sa.Column('meeting', sa.String(length=100), nullable=False),
     sa.Column('app_date', sa.Date(), nullable=False),
     sa.Column('app_time', sa.String(), nullable=False),
-    sa.Column('comment', sa.String(length=300), nullable=False),
+    sa.Column('comment', sa.String(length=300), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
@@ -87,7 +87,7 @@ def upgrade():
     sa.Column('meeting', sa.String(length=100), nullable=False),
     sa.Column('app_date', sa.Date(), nullable=False),
     sa.Column('app_time', sa.String(), nullable=False),
-    sa.Column('comment', sa.String(length=300), nullable=False),
+    sa.Column('comment', sa.String(length=300), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
@@ -103,7 +103,7 @@ def upgrade():
     sa.Column('meeting', sa.String(length=100), nullable=False),
     sa.Column('app_date', sa.Date(), nullable=False),
     sa.Column('app_time', sa.String(), nullable=False),
-    sa.Column('comment', sa.String(length=300), nullable=False),
+    sa.Column('comment', sa.String(length=300), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )

@@ -1,5 +1,5 @@
 from app import db
-import datetime
+from datetime import datetime, timezone
 
 
 class Admin(db.Model):
@@ -9,7 +9,7 @@ class Admin(db.Model):
     phone = db.Column(db.String(15), nullable=False)
     password = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(100), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow, nullable=False )
+    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc), nullable=False)
 
     def to_dict(self):
         return {

@@ -64,10 +64,10 @@ class UserAdmin(Resource):
 
             admin_data = {
                 "message": "Admin user created successfully",
-                "full_name": full_name,
-                "email": email,
-                "phone": phone,
-                "password": hashed_password
+                # "full_name": full_name,
+                # "email": email,
+                # "phone": phone,
+                # "password": hashed_password
             }
 
             return make_response(jsonify(admin_data), 201)

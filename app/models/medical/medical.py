@@ -12,7 +12,7 @@ class Medical(db.Model):
     meeting = db.Column(db.String(100), nullable=False)
     app_date = db.Column(db.Date, nullable=False)
     app_time = db.Column(db.String, nullable=False)
-    comment= db.Column(db.String(300), nullable=False)
+    comment= db.Column(db.String(300))
     created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow, nullable=False )
 
 
