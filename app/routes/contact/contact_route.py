@@ -84,10 +84,7 @@ class ContactUs(Resource):
 
             response_data = {
                 "message": "Contact appointment created successfully",
-                "full_name": full_name,
-                "email": email,
-                "phone": phone,
-                "comment": comment
+                
             }
 
             return make_response(jsonify(response_data), 201)
