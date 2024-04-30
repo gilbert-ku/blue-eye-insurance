@@ -36,6 +36,20 @@ class Budget(db.Model):
         recreation_budget = income * self.recreation_allocation
         charity_budget = income * self.charity_allocation
         holiday_budget = income * self.holiday_allocation
-        miscellaneous = income * self.miscellaneous_allocation
+        miscellaneous_budget = income * self.miscellaneous_allocation
 
-        
+        return {
+            "Tith": tith_budget,
+            "Self": self_budget,
+            "Rent": rent_budget,
+            "Transport": transport_budget,
+            "Education": education_budget,
+            "Insurance": insurance_budget,
+            "emergency": emergency_budget,
+            "Clothing": clothing_budget,
+            "Recreation": recreation_budget,
+            "Charity": charity_budget,
+            "Holiday": holiday_budget,
+            "Miscellaneous": miscellaneous_budget
+
+        }
