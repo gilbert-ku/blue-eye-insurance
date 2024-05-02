@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 
 class Budget(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    use_name = db.Column(db.String(100), nullable=False)
+    user_name = db.Column(db.String(100), nullable=False)
     phone_number = db.Column(db.String(15), nullable=False)
     email = db.Column(db.String(50), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc), nullable=False)
