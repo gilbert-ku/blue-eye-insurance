@@ -20,6 +20,7 @@ from app.routes.cooprate.cooprate_route import corporate_blueprint
 from app.routes.contact.contact_route import contact_blueprint
 from app.routes.admin.admin import admin_blueprint
 from app.routes.login.login_route import login_blueprint
+from app.routes.budget.badget_route import budget_blueprint
 # register blueprint
 app.register_blueprint(finacial_blueprint)
 app.register_blueprint(investment_blueprint)
@@ -29,3 +30,4 @@ app.register_blueprint(corporate_blueprint)
 app.register_blueprint(contact_blueprint)
 app.register_blueprint(admin_blueprint)
 app.register_blueprint(login_blueprint)
+app.register_blueprint(budget_blueprint)
